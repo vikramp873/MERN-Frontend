@@ -22,37 +22,40 @@ function NavBar() {
          {
             auth ?
 
-               <Navbar bg="dark" variant="dark">
+               <Navbar bg="dark" variant="dark" expand='md'>
                   <Container>
                      <Navbar.Brand >HRIS</Navbar.Brand>
-                     <Nav className="justify-content-end">
-                        <Nav.Item>
-                           <Nav.Link><Link to="/add-products" className='before-login'>Add Products</Link></Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                           <Nav.Link > <Link to="/list-products" className='before-login'>List Products</Link> </Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                           <Nav.Link >
-                              <Link to="/signup" onClick={clearData} className='before-login'> Logout  </Link>
-                           </Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
+                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+                        <Nav >
+                           <Nav.Item>
+                              <Nav.Link><Link to="/add-products" className='before-login'>Add Products</Link></Nav.Link>
+                           </Nav.Item>
+                           <Nav.Item>
+                              <Nav.Link > <Link to="/list-products" className='before-login'>List Products</Link> </Nav.Link>
+                           </Nav.Item>
+                           <Nav.Item>
+                              <Nav.Link >
+                                 <Link to="/signup" onClick={clearData} className='before-login'> Logout  </Link>
+                              </Nav.Link>
+                           </Nav.Item>
+                           <Nav.Item>
 
-                           <Nav.Link >
-                              <Link className='before-login'>
-                                 <span>Welcome  {auth.body.name} </span> </Link>
-                           </Nav.Link>
-                        </Nav.Item>
+                              <Nav.Link >
+                                 <Link className='before-login'>
+                                    <span>Welcome  {auth.body.name} </span> </Link>
+                              </Nav.Link>
+                           </Nav.Item>
 
-                     </Nav>
+                        </Nav>
+                     </Navbar.Collapse>
                   </Container>
                </Navbar>
 
 
                :
                <>
-                  <Navbar bg="dark" variant="dark">
+                  <Navbar bg="dark" variant="dark" expand='lg' >
                      <Container>
                         <Navbar.Brand>HRIS</Navbar.Brand>
                         <Nav className="justify-content-end">

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router';
+import { ThreeDots } from 'react-loader-spinner';
+import './style.css'
 
 const PORT = 'https://mernbackend-gzhr.onrender.com';
 
@@ -10,6 +12,7 @@ export default function Products() {
    const [productPrice, setProductPrice] = useState('');
    const [productCategory, setProductCategory] = useState('');
    const [productCompany, setProductCompany] = useState('');
+   const [loading, setFirstLoad] = useState(false)
    const navigate = useNavigate();
    const [error, setError] = useState(false);
 
@@ -24,6 +27,7 @@ export default function Products() {
          setError(true)
       }
       else {
+         setFirstLoad(true)
          let productData = await fetch(`${PORT}/add-product`, {
             method: "POST",
             body: JSON.stringify({ name: productName, price: productPrice, category: productCategory, company: productCompany, userId: data.body._id }),
@@ -35,11 +39,13 @@ export default function Products() {
          productData = await productData.json();
          console.log(productData);
          if (productData.sucess) {
+            setFirstLoad(false)
             alert('record successfully created');
             navigate('/list-products');
 
          }
          else {
+            setFirstLoad(false)
             alert('something went wrong')
          }
       }
@@ -51,6 +57,11 @@ export default function Products() {
                <div className="container">
                   <div className="row ">
                      <div className="col-sm-12 col-md-7 col-lg-5 mx-auto mt50">
+
+                        <div className='dots' >
+
+                           <ThreeDots type="ThreeDots" color="#000" style={{ display: 'flex', justifyContent: 'center' }} className='dots' height={100} width={90} visible={loading} />
+                        </div>
                         <div className="card card-signin mb-3">
                            <div className="card-body" >
 

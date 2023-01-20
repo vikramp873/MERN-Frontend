@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+import './style.css'
+import { ThreeDots } from 'react-loader-spinner'
 const PORT = 'https://mernbackend-gzhr.onrender.com';
 
 export default function Signup() {
@@ -8,6 +11,8 @@ export default function Signup() {
    const [name, setName] = useState('');
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
+
+   const [loading, setFirstLoad] = useState(false)
 
    const [error, setError] = useState(false);
    const navigate = useNavigate()
@@ -27,6 +32,8 @@ export default function Signup() {
          setError(true)
       }
       else {
+
+         setFirstLoad(true)
          let data = await fetch(`${PORT}/signup`, {
             method: 'post',
             body: JSON.stringify({ name, email, password }),
@@ -39,11 +46,16 @@ export default function Signup() {
          console.log(data);
 
          if (data.success) {
-            localStorage.setItem('user', JSON.stringify(data));
-            navigate('/')
+
+            setFirstLoad(false)
+            alert('User created, Please login')
+            // localStorage.setItem('user', JSON.stringify(data));
+            navigate('/login')
          }
          else {
             alert('user already exists')
+
+            setFirstLoad(false)
          }
       }
 
@@ -92,9 +104,7 @@ export default function Signup() {
 
                                     {error && !password && <span style={{ color: 'red' }}>Enter Password</span>}
                                  </Form.Group>
-                                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-               <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group> */}
+
                                  <Button variant="primary" type="submit" onClick={submitData}>
                                     Submit
                                  </Button>
@@ -103,6 +113,11 @@ export default function Signup() {
                         </div>
                      </div>
                   </div>
+               </div>
+
+               <div className='dots' >
+
+                  <ThreeDots type="ThreeDots" color="#000" style={{ display: 'flex', justifyContent: 'center' }} className='dots' height={100} width={90} visible={loading} />
                </div>
             </div>
 

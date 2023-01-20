@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+// const Loader = loadable(() => import('react-loader-spinner' /* webpackChunkName: "Loader"  */));
+import './style.css'
+import { ThreeDots } from 'react-loader-spinner'
 
 const PORT = 'https://mernbackend-gzhr.onrender.com';
 
@@ -9,6 +12,7 @@ export default function Login() {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [error, setError] = useState(false);
+   const [loading, setFirstLoad] = useState(false)
    const navigate = useNavigate()
 
    useEffect(() => {
@@ -26,6 +30,7 @@ export default function Login() {
          setError(true)
       }
       else {
+         setFirstLoad(true)
 
 
          let data = await fetch(`${PORT}/login`, {
@@ -39,6 +44,8 @@ export default function Login() {
          data = await data.json()
          console.log(data)
          if (data.body) {
+            setFirstLoad(false)
+
             alert('Login successfully');
             localStorage.setItem("user", JSON.stringify(data))
             localStorage.setItem("token", JSON.stringify(data.token))
@@ -46,6 +53,8 @@ export default function Login() {
          }
          else {
             alert("Please enter correct details")
+
+            setFirstLoad(false)
          }
       }
    }
@@ -54,8 +63,12 @@ export default function Login() {
 
          <h1 className='text-center my-4' >Login</h1>
          <section className="over-y-hide">
+
+
+
             <div className="container">
                <div className="row ">
+
                   <div className="col-sm-12 col-md-7 col-lg-5 mx-auto mt50">
                      <div className="card card-signin mb-3">
                         <div className="card-body" >
@@ -89,9 +102,16 @@ export default function Login() {
                                  </Button>
                               </Form>
                            </div>
+
                         </div>
                      </div>
+
                   </div>
+               </div>
+
+               <div className='dots' >
+
+                  <ThreeDots type="ThreeDots" color="#000" style={{ display: 'flex', justifyContent: 'center' }} className='dots' height={100} width={90} visible={loading} />
                </div>
             </div>
 
