@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+const PORT = 'https://mernbackend-gzhr.onrender.com';
 
 export default function Signup() {
 
@@ -26,7 +27,7 @@ export default function Signup() {
          setError(true)
       }
       else {
-         let data = await fetch('http://localhost:4000/signup', {
+         let data = await fetch(`${PORT}/signup`, {
             method: 'post',
             body: JSON.stringify({ name, email, password }),
             headers: {

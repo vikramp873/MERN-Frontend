@@ -3,6 +3,8 @@ import { Form, Button } from "react-bootstrap";
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
+const PORT = 'https://mernbackend-gzhr.onrender.com';
+
 
 
 
@@ -24,7 +26,7 @@ export default function UpdateProduct() {
    }, [])
 
    const getProductDetails = async () => {
-      let data = axios.get(`http://localhost:4000/one-product/${params.id}`);
+      let data = axios.get(`${PORT}/one-product/${params.id}`);
       let user = await data;
       setProductData(user.data.data);
       setProductName(user.data.data.name);
@@ -40,7 +42,7 @@ export default function UpdateProduct() {
          setError(true)
       }
       else {
-         let productData = await fetch(`http://localhost:4000/update/${params.id}`, {
+         let productData = await fetch(`${PORT}/update/${params.id}`, {
             method: "PUT",
             body: JSON.stringify({ name: productName, price: productPrice, category: productCategory, company: productCompany }),
             headers: {

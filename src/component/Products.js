@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router';
 
+const PORT = 'https://mernbackend-gzhr.onrender.com';
+
 export default function Products() {
 
    const [productName, setProductName] = useState('');
@@ -22,7 +24,7 @@ export default function Products() {
          setError(true)
       }
       else {
-         let productData = await fetch('http://localhost:4000/add-product', {
+         let productData = await fetch(`${PORT}/add-product`, {
             method: "POST",
             body: JSON.stringify({ name: productName, price: productPrice, category: productCategory, company: productCompany, userId: data.body._id }),
             headers: {
