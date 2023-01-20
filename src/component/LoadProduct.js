@@ -22,7 +22,7 @@ function LoadProduct() {
 
 
 
-      let data = await axios.get('http://localhost:4000/get-data', {
+      let data = await axios.get(`${PORT}/get-data`, {
          headers: {
             'authorization': `bearer ${token}`
          }
@@ -34,7 +34,7 @@ function LoadProduct() {
 
    const deleteData = async (id) => {
 
-      let data = await axios.delete(`http://localhost:4000/delete/${id}`);
+      let data = await axios.delete(`${PORT}/delete/${id}`);
       console.log(data);
       getProductData();
    }
